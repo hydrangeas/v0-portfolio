@@ -1,10 +1,38 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Code, Database, Globe, Layout, Server, Smartphone } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { motion } from "framer-motion";
+import {
+  Code,
+  Database,
+  Globe,
+  Layout,
+  Server,
+  Smartphone,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-const skills = [
+// スキルデータの型定義
+interface Skill {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+// アニメーション設定
+const fadeInAnimation = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+};
+
+// スキルデータ
+const skills: Skill[] = [
   {
     icon: <Code className="h-10 w-10 text-primary" />,
     title: "フロントエンド開発",
@@ -35,13 +63,15 @@ const skills = [
     title: "モバイル開発",
     description: "React Native, Flutter",
   },
-]
+];
 
 export default function Skills() {
   return (
     <div className="space-y-8">
       <div className="space-y-2 text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">スキル</h2>
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+          スキル
+        </h2>
         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
           私が習得している技術スタックとスキルセット
         </p>
@@ -50,10 +80,8 @@ export default function Skills() {
         {skills.map((skill, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            {...fadeInAnimation}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
           >
             <Card className="h-full transition-all hover:shadow-md bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800">
               <CardHeader className="flex flex-row items-center gap-4 pb-2">
@@ -61,13 +89,14 @@ export default function Skills() {
                 <CardTitle>{skill.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">{skill.description}</CardDescription>
+                <CardDescription className="text-base">
+                  {skill.description}
+                </CardDescription>
               </CardContent>
             </Card>
           </motion.div>
         ))}
       </div>
     </div>
-  )
+  );
 }
-

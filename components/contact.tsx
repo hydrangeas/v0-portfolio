@@ -1,59 +1,88 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { useState, ChangeEvent, FormEvent } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, MapPin, Phone } from "lucide-react";
+
+// フォームデータの型定義
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+// アニメーション設定
+const fadeInLeft = {
+  initial: { opacity: 0, x: -20 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+};
+
+const fadeInRight = {
+  initial: { opacity: 0, x: 20 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+};
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // ここに実際のフォーム送信ロジックを追加
     setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
-      setFormData({ name: "", email: "", message: "" })
-    }, 1500)
-  }
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+    }, 1500);
+  };
 
   return (
     <div className="space-y-8">
       <div className="space-y-2 text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">お問い合わせ</h2>
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+          お問い合わせ
+        </h2>
         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
           プロジェクトについてのご相談やお問い合わせはこちらから
         </p>
       </div>
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-2">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
+        <motion.div {...fadeInLeft}>
           <Card className="h-full bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
               <CardTitle>連絡先情報</CardTitle>
-              <CardDescription>以下の方法でもご連絡いただけます</CardDescription>
+              <CardDescription>
+                以下の方法でもご連絡いただけます
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center gap-4">
@@ -62,7 +91,9 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">メール</p>
-                  <p className="text-sm text-muted-foreground">your.email@example.com</p>
+                  <p className="text-sm text-muted-foreground">
+                    your.email@example.com
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -71,7 +102,9 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">電話</p>
-                  <p className="text-sm text-muted-foreground">+81 90-1234-5678</p>
+                  <p className="text-sm text-muted-foreground">
+                    +81 90-1234-5678
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -86,16 +119,13 @@ export default function Contact() {
             </CardContent>
           </Card>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
+        <motion.div {...fadeInRight}>
           <Card className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800">
             <CardHeader>
               <CardTitle>メッセージを送る</CardTitle>
-              <CardDescription>以下のフォームからお気軽にご連絡ください</CardDescription>
+              <CardDescription>
+                以下のフォームからお気軽にご連絡ください
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {isSubmitted ? (
@@ -103,7 +133,9 @@ export default function Contact() {
                   <div className="rounded-full bg-gray-200 dark:bg-gray-800 p-3">
                     <Mail className="h-6 w-6 text-gray-700 dark:text-gray-300" />
                   </div>
-                  <h3 className="text-xl font-semibold">メッセージを送信しました</h3>
+                  <h3 className="text-xl font-semibold">
+                    メッセージを送信しました
+                  </h3>
                   <p className="text-center text-muted-foreground">
                     お問い合わせありがとうございます。できるだけ早くご返信いたします。
                   </p>
@@ -165,6 +197,5 @@ export default function Contact() {
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
-

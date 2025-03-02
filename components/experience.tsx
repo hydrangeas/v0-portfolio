@@ -4,7 +4,25 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Briefcase, Award } from "lucide-react";
 
-const experiences = [
+// 経験データの型定義
+interface Experience {
+  position: string;
+  company: string;
+  period: string;
+  description: string;
+  skills: string[];
+  icon: React.ReactNode;
+}
+
+// アニメーション設定
+const fadeInAnimation = {
+  initial: { opacity: 0, x: -20 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true },
+};
+
+// 経験データ
+const experiences: Experience[] = [
   {
     position: "シニアフロントエンド開発者",
     company: "テック企業株式会社",
@@ -68,10 +86,8 @@ export default function Experience() {
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              {...fadeInAnimation}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
               className="relative pl-24"
             >
               {/* アイコン */}
