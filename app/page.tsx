@@ -53,8 +53,8 @@ export default function Home() {
             <span className="text-gray-600 dark:text-gray-400">{"}"}</span>
           </a>
           <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link, index) => (
-              <a key={index} href={link.href} className={navLinkClass}>
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className={navLinkClass}>
                 {link.label}
               </a>
             ))}
