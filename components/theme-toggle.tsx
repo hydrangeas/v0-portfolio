@@ -9,20 +9,19 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  // コンポーネントがマウントされた後にのみレンダリングする
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if (!mounted) {
-    return null
-  }
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark")
+  
+  if (!mounted) return null
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
       aria-label="テーマを切り替える"
       className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-50 dark:hover:bg-gray-800"
     >
@@ -30,4 +29,3 @@ export default function ThemeToggle() {
     </Button>
   )
 }
-

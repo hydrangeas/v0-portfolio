@@ -4,34 +4,7 @@ import Articles from "@/components/articles";
 import Experience from "@/components/experience";
 import Contact from "@/components/contact";
 import ThemeToggle from "@/components/theme-toggle";
-
-// ナビゲーションリンクの型定義
-interface NavLink {
-  href: string;
-  label: string;
-}
-
-// ナビゲーションリンク
-const navLinks: NavLink[] = [
-  { href: "#home", label: "ホーム" },
-  { href: "#skills", label: "スキル" },
-  { href: "#articles", label: "記事" },
-  { href: "#experience", label: "経験" },
-  { href: "#contact", label: "お問い合わせ" },
-];
-
-// セクションの型定義
-interface Section {
-  id: string;
-  component: React.ReactNode;
-}
-
-// ナビゲーションリンクの共通クラス
-const navLinkClass =
-  "text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 transition-colors";
-
-// セクションの共通クラス
-const sectionClass = "py-12 md:py-24";
+import { navLinks, navLinkClass, sectionClass, Section } from "@/lib/navigation";
 
 export default function Home() {
   // セクションの定義
