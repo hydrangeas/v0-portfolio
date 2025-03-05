@@ -33,9 +33,9 @@ describe('ThemeToggle', () => {
     render(<ThemeToggle />);
     
     // Moonアイコンが表示されていることを確認
-    // Note: SVGアイコンは直接テストが難しいため、aria-labelなどがあると良い
     const button = screen.getByRole('button', { name: /テーマを切り替える/i });
     expect(button).toBeInTheDocument();
+    expect(screen.getByTestId('theme-icon-moon')).toBeInTheDocument();
   });
 
   it('shows sun icon when theme is dark', () => {
@@ -50,6 +50,23 @@ describe('ThemeToggle', () => {
     // Sunアイコンが表示されていることを確認
     const button = screen.getByRole('button', { name: /テーマを切り替える/i });
     expect(button).toBeInTheDocument();
+    expect(screen.getByTestId('theme-icon-sun')).toBeInTheDocument();
+  });
+  
+  it('handles system theme correctly', () => {
+    // モックの戻り値を設定（systemテーマ）
+    (useTheme as jest.Mock).mockReturnValue({
+      theme: 'system',
+      setTheme: jest.fn(),
+    });
+
+    render(<ThemeToggle />);
+    
+    // システムテーマの場合もボタンが表示されることを確認
+    const button = screen.getByRole('button', { name: /テーマを切り替える/i });
+    expect(button).toBeInTheDocument();
+    // システムテーマの場合はデフォルトでMoonアイコンを表示
+    expect(screen.getByTestId('theme-icon-moon')).toBeInTheDocument();
   });
 
   it('toggles theme when clicked', () => {
