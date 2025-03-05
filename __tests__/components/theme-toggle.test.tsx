@@ -35,7 +35,7 @@ describe('ThemeToggle', () => {
     // Moonアイコンが表示されていることを確認
     const button = screen.getByRole('button', { name: /テーマを切り替える/i });
     expect(button).toBeInTheDocument();
-    expect(button.innerHTML).toContain('lucide-moon');
+    expect(screen.getByTestId('theme-icon-moon')).toBeInTheDocument();
   });
 
   it('shows sun icon when theme is dark', () => {
@@ -50,7 +50,7 @@ describe('ThemeToggle', () => {
     // Sunアイコンが表示されていることを確認
     const button = screen.getByRole('button', { name: /テーマを切り替える/i });
     expect(button).toBeInTheDocument();
-    expect(button.innerHTML).toContain('lucide-sun');
+    expect(screen.getByTestId('theme-icon-sun')).toBeInTheDocument();
   });
   
   it('handles system theme correctly', () => {
@@ -66,7 +66,7 @@ describe('ThemeToggle', () => {
     const button = screen.getByRole('button', { name: /テーマを切り替える/i });
     expect(button).toBeInTheDocument();
     // システムテーマの場合はデフォルトでMoonアイコンを表示
-    expect(button.innerHTML).toContain('lucide-moon');
+    expect(screen.getByTestId('theme-icon-moon')).toBeInTheDocument();
   });
 
   it('toggles theme when clicked', () => {
