@@ -6,7 +6,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { MobileNav } from "@/components/mobile-nav";
 
 // 遅延ロードするコンポーネント
-const Hero = dynamic(() => import("@/components/hero"), { ssr: true });
+const Hero = dynamic(() => import("@/components/hero"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
 const Skills = dynamic(() => import("@/components/skills"), { 
   loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
   ssr: true
