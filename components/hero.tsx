@@ -5,10 +5,16 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { socialLinks, socialButtonClass } from "@/lib/social-links";
 
-// アニメーション設定
+// アニメーション設定 - パフォーマンス最適化
 const fadeInAnimation = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
+  transition: { 
+    type: "spring", 
+    stiffness: 100, 
+    damping: 15,
+    restDelta: 0.001 // アニメーション終了の閾値を小さくして最適化
+  }
 };
 
 // ヒーローセクションのコンポーネント
@@ -26,8 +32,9 @@ export default function Hero() {
 function HeroTitle() {
   return (
     <motion.div
-      {...fadeInAnimation}
-      transition={{ duration: 0.5 }}
+      initial={fadeInAnimation.initial}
+      animate={fadeInAnimation.animate}
+      transition={fadeInAnimation.transition}
       className="space-y-4"
     >
       <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -45,8 +52,9 @@ function HeroTitle() {
 function ActionButtons() {
   return (
     <motion.div
-      {...fadeInAnimation}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      initial={fadeInAnimation.initial}
+      animate={fadeInAnimation.animate}
+      transition={{ ...fadeInAnimation.transition, delay: 0.1 }}
       className="flex flex-wrap items-center justify-center gap-4"
     >
       <Button asChild className="bg-gray-800 hover:bg-gray-700">
@@ -70,8 +78,9 @@ function ActionButtons() {
 function SocialButtons() {
   return (
     <motion.div
-      {...fadeInAnimation}
-      transition={{ duration: 0.5, delay: 0.4 }}
+      initial={fadeInAnimation.initial}
+      animate={fadeInAnimation.animate}
+      transition={{ ...fadeInAnimation.transition, delay: 0.2 }}
       className="flex items-center justify-center gap-4"
     >
       {socialLinks.map((link, index) => (
