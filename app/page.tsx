@@ -1,10 +1,33 @@
-import Hero from "@/components/hero";
-import Skills from "@/components/skills";
-import Articles from "@/components/articles";
-import Experience from "@/components/experience";
-import Contact from "@/components/contact";
+import dynamic from 'next/dynamic';
 import ThemeToggle from "@/components/theme-toggle";
 import { navLinks, navLinkClass, sectionClass, Section } from "@/lib/navigation";
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { MobileNav } from "@/components/mobile-nav";
+
+// 遅延ロードするコンポーネント
+const Hero = dynamic(() => import("@/components/hero"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
+const Skills = dynamic(() => import("@/components/skills"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
+const Articles = dynamic(() => import("@/components/articles"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
+const Experience = dynamic(() => import("@/components/experience"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
+const Contact = dynamic(() => import("@/components/contact"), { 
+  loading: () => <Skeleton className="w-full h-[400px] rounded-lg" />,
+  ssr: true
+});
+
+export const revalidate = 3600; // 1時間ごとに再検証
 
 export default function Home() {
   // セクションの定義
@@ -33,6 +56,7 @@ export default function Home() {
             ))}
           </nav>
           <div className="flex items-center gap-4">
+            <MobileNav />
             <ThemeToggle />
           </div>
         </div>
@@ -40,7 +64,9 @@ export default function Home() {
       <main className="container px-4 pt-20 md:px-6">
         {sections.map((section) => (
           <section key={section.id} id={section.id} className={sectionClass}>
-            {section.component}
+            <Suspense fallback={<Skeleton className="w-full h-[400px] rounded-lg" />}>
+              {section.component}
+            </Suspense>
           </section>
         ))}
       </main>
